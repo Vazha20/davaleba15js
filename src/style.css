@@ -13,6 +13,13 @@ body {
     align-items: center;
     justify-content: center;
     margin: 0;
+    
+}
+.bluebox{
+    background-color: rgb(123, 123, 255);
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
 }
 
 h1 {
@@ -27,10 +34,54 @@ h1 {
     margin: 0 auto;
     max-width: 1200px;
 }
-.typebox{
-    background-color: green;
-    padding: 10px;
+.center{
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
 }
+.type-grass {
+    background-color: #7CFC00;
+    color: black;
+    padding: 5px 50px;
+    border-radius: 5px;
+    font-size: 20px;
+  }
+  
+  .type-fire {
+    padding: 5px 50px;
+    border-radius: 5px;
+    background-color: #e25822;
+    color: #ffffff;
+    border-style: none;
+    font-size: 20px;
+  }
+  .type-poison{
+    padding: 5px 50px;
+    border-radius: 5px;
+    background-color: #9966cc;
+    color: #ffffff;
+    margin-left: 20px;
+    font-size: 20px;
+
+  }
+  .type-psychic{
+    padding: 5px 50px;
+    border-radius: 5px;
+    background-color: #ff6ff8;
+    color: #ffffff;
+    margin-left: 20px;
+    font-size: 20px;
+
+  }
+  .type-water {
+    background-color: #00c8ff;
+    color: #ffffff;
+    padding: 5px 50px;
+    border-radius: 5px;
+  }
+
+ 
+  
 .pokemon {
     background-color: #eee;
     border-radius: 10px;
@@ -42,6 +93,7 @@ h1 {
 .page-flex{
     display: flex;
 }
+
 .imgfordescr{
     background-color: #e0e0e0;
     border-radius: 10px;

@@ -33,6 +33,7 @@ const getTypesData = async (types) => {
 
 getPokemons(id);
 
+
 const createPokemonCard = (pokemon, speciesData, typesData) => {
   const pokemonEl = document.createElement("div");
 
@@ -40,20 +41,37 @@ const createPokemonCard = (pokemon, speciesData, typesData) => {
   console.log(pokemon.name);
 
   const pokemonInnerHtml = `
+  <div class="center">
   <h3>${pokemon.name}</h3>
+  </div>
 
   <div class="page-flex">
     <div class="imgfordescr">
       <img src="${pokemon.sprites.other['official-artwork'].front_default}">
     </div>
        
-    <div class="info">
+    <div>
       <p>${getOverview(speciesData)}</p>
-      <p class="typebox">Types: ${getTypes(pokemon)}</p>
-      <p><span>Weaknesses:</span> ${getWeaknesses(typesData)}</p>
+      <div><p>Versions</p></div>
+      <div class="bluebox">kdslk</div>
+      <h3>Types</h3> 
+      <p>${getTypes(pokemon)}</p>
+      <h3>Weaknesses</h3> 
+      <div>
+        ${getWeaknesses(typesData)
+          .map(
+            (weakness) => `
+              <span class="${weakness.typeClass}">${weakness.name}</span>
+            `
+          )
+          .join("")}
+      </div>
     </div>
   </div>
-  <p><span>Stats:</span> ${getStats(pokemon)}</p>
+  <div class="pokemon-stats-info">
+  <h3>Stats</h3>
+  <p> ${getStats(pokemon)}</p>
+  </div>
   `;
 
   pokemonEl.innerHTML = pokemonInnerHtml;
@@ -71,19 +89,31 @@ const getOverview = (speciesData) => {
 };
 
 const getTypes = (pokemon) => {
-  return pokemon.types.map((type) => type.type.name).join(", ");
+  const typeClasses = {
+    grass: "type-grass",
+    fire: "type-fire",
+    water: "type-water",
+    poison: "type-poison",    
+    psychic: "type-psychic",
+  };
+
+  return pokemon.types
+    .map((type) => `<span class="${typeClasses[type.type.name]}">${type.type.name}</span>`)
+    .join("");
 };
 
 const getWeaknesses = (typesData) => {
   const weaknesses = [];
   typesData.forEach((typeData) => {
     typeData.damage_relations.double_damage_from.forEach((weakness) => {
-      weaknesses.push(weakness.name);
+      weaknesses.push({
+        name: weakness.name,
+        typeClass: `type-${weakness.name}`,
+      });
     });
   });
-  return weaknesses.join(", ");
+  return weaknesses;
 };
-
 const getStats = (pokemon) => {
   return pokemon.stats.map((stat) => `${stat.stat.name}: ${stat.base_stat}`).join(", ");
 };
