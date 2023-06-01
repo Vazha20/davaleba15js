@@ -52,15 +52,22 @@ const createPokemonCard = (pokemon, speciesData, typesData,) => {
     <div class="imgfordescr col-6">
       <img src="${pokemon.sprites.other['official-artwork'].front_default}">
     </div>
+    
+   
+    
     <div class="col-6">
-      <p>${getOverview(speciesData)}</p>
+    <div class="absolutepos">
+    <p class="overviewOne">${getOverview(speciesData)}</p>
+    <p class="overviewTwo">${getOverviewTwo(speciesData)}</p>
+    </div>
+  
       <div class="page-flex">
-      <div> <h3>Versions:</h3></div>
+      <div> <h3 class="margin">Versions:</h3></div>
       <div class="bluecircle">
       </div>
-      <div class="insideone clickOne">jk</div>
+      <div class="insideone clickOne"></div>
       <div class="redcircle"></div>
-      <div class="insidetwo clickTwo">jk</div>
+      <div class="insidetwo clickTwo"></div>
       </div>
       <div class="bluebox">
       <div>
@@ -69,7 +76,7 @@ const createPokemonCard = (pokemon, speciesData, typesData,) => {
       <h3>Weight</h3>
       <p>${pokemon.weight}kg</p>
       <h3>Gender</h3>
-      <img class="img_size" src="./male-and-female-signs.png">
+      <img class="img_size" src="./src/img/gender.png">
       </div>
       <div>
       <h3>Category</h3>
@@ -86,8 +93,9 @@ const createPokemonCard = (pokemon, speciesData, typesData,) => {
         ${getWeaknesses(typesData)}
       </div>
     </div>
+  
   </div>
-  <div>
+  <div class="absolutepos">
   <h3>Stats</h3>
   <div> ${getStats(pokemon)}</div>
   </div>
@@ -103,17 +111,25 @@ const createPokemonCard = (pokemon, speciesData, typesData,) => {
   const bluecircle = pokemonEl.querySelector(".bluecircle");
   const clickOne = pokemonEl.querySelector(".clickOne");
   const clickTwo = pokemonEl.querySelector(".clickTwo");
+  const overviewOne = pokemonEl.querySelector(".overviewOne");
+  const overviewTwo = pokemonEl.querySelector(".overviewTwo");
   redcircle.style.display="none"
+  overviewTwo.style.display="none"
   
   
   clickOne.addEventListener("click", () => {
     redcircle.style.display = "none";
     bluecircle.style.display =[]
+    overviewTwo.style.display="none"
+    overviewOne.style.display=[]
+    
   });
   
   clickTwo.addEventListener("click", () => {
     bluecircle.style.display = "none";
     redcircle.style.display=[]
+    overviewOne.style.display="none"
+    overviewTwo.style.display=[]
   });
   
     
@@ -141,6 +157,16 @@ const getOverview = (speciesData) => {
       entry.language.name === "en" 
   ).flavor_text;
   return overview;
+  
+};
+const getOverviewTwo = (speciesData) => {
+  const overview = speciesData.flavor_text_entries.find(
+    (version) =>
+      version.version.name === "red" &&
+      version.language.name === "en" 
+  ).flavor_text;
+  return overview;
+
 };
 
 const getTypes = (pokemon) => {
