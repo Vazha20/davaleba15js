@@ -34,50 +34,105 @@ const getTypesData = async (types) => {
 getPokemons(id);
 
 
-const createPokemonCard = (pokemon, speciesData, typesData) => {
+const createPokemonCard = (pokemon, speciesData, typesData,) => {
   const pokemonEl = document.createElement("div");
 
   pokemonEl.classList.add("pokemonfordescr");
   console.log(pokemon.name);
 
+  
+
   const pokemonInnerHtml = `
   <div class="center">
   <h3>${pokemon.name}</h3>
+  <p>№${pokemon.id}</p>
   </div>
 
   <div class="page-flex">
-    <div class="imgfordescr">
+    <div class="imgfordescr col-6">
       <img src="${pokemon.sprites.other['official-artwork'].front_default}">
     </div>
-       
-    <div>
+    <div class="col-6">
       <p>${getOverview(speciesData)}</p>
-      <div><p>Versions</p></div>
-      <div class="bluebox">kdslk</div>
-      <h3>Types</h3> 
-      <p>${getTypes(pokemon)}</p>
-      <h3>Weaknesses</h3> 
+      <div class="page-flex">
+      <div> <h3>Versions:</h3></div>
+      <div class="bluecircle">
+      </div>
+      <div class="insideone clickOne">jk</div>
+      <div class="redcircle"></div>
+      <div class="insidetwo clickTwo">jk</div>
+      </div>
+      <div class="bluebox">
       <div>
-        ${getWeaknesses(typesData)
-          .map(
-            (weakness) => `
-              <span class="${weakness.typeClass}">${weakness.name}</span>
-            `
-          )
-          .join("")}
+      <h3>Height</h3>
+      <p>0.${pokemon.height}m</p>
+      <h3>Weight</h3>
+      <p>${pokemon.weight}kg</p>
+      <h3>Gender</h3>
+      <img class="img_size" src="./male-and-female-signs.png">
+      </div>
+      <div>
+      <h3>Category</h3>
+      <p>${getCategory(speciesData)}</p>
+      <h3>Abilities</h3>
+      <p>${getAbilities(pokemon)}</p>
+      </div>
+
+      </div>
+      <h3>Types</h3> 
+      <div class="types_container">${getTypes(pokemon)}</div>
+      <h3>Weaknesses</h3> 
+      <div class="position_abs">
+        ${getWeaknesses(typesData)}
       </div>
     </div>
   </div>
-  <div class="pokemon-stats-info">
+  <div>
   <h3>Stats</h3>
-  <p> ${getStats(pokemon)}</p>
+  <div> ${getStats(pokemon)}</div>
   </div>
   `;
 
   pokemonEl.innerHTML = pokemonInnerHtml;
 
   poke_container.appendChild(pokemonEl);
-};
+
+  
+
+  const redcircle = pokemonEl.querySelector(".redcircle");
+  const bluecircle = pokemonEl.querySelector(".bluecircle");
+  const clickOne = pokemonEl.querySelector(".clickOne");
+  const clickTwo = pokemonEl.querySelector(".clickTwo");
+  redcircle.style.display="none"
+  
+  
+  clickOne.addEventListener("click", () => {
+    redcircle.style.display = "none";
+    bluecircle.style.display =[]
+  });
+  
+  clickTwo.addEventListener("click", () => {
+    bluecircle.style.display = "none";
+    redcircle.style.display=[]
+  });
+  
+    
+  };
+
+  const getCategory = (speciesData) => {
+    const category = speciesData.genera.find(
+      (genus) => genus.language.name === "en"
+    ).genus;
+    return category;
+  };
+  
+  const getAbilities = (pokemon) => {
+    const abilities = pokemon.abilities
+      .map((ability) => ability.ability.name)
+      .join(", ");
+    return abilities;
+  };
+
 
 const getOverview = (speciesData) => {
   const overview = speciesData.flavor_text_entries.find(
@@ -95,6 +150,10 @@ const getTypes = (pokemon) => {
     water: "type-water",
     poison: "type-poison",    
     psychic: "type-psychic",
+    flying: "type-flying",
+    bug: "type-bug",
+    ice: "type-ice",
+    ground: "type-ground",
   };
 
   return pokemon.types
@@ -112,8 +171,16 @@ const getWeaknesses = (typesData) => {
       });
     });
   });
-  return weaknesses;
-};
+  return weaknesses
+  .map(
+    (weakness) => `
+      <span class="${weakness.typeClass}">${weakness.name}</span>
+    `
+  )
+  .join("")}
+
 const getStats = (pokemon) => {
-  return pokemon.stats.map((stat) => `${stat.stat.name}: ${stat.base_stat}`).join(", ");
+  return pokemon.stats.map((stat) => `${stat.stat.name}: ${stat.base_stat}`).join(" ");
 };
+
+
